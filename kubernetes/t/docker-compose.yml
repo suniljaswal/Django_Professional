@@ -1,0 +1,21 @@
+version: "3"
+services:
+ web:
+  build: .
+  command: python /code/manage.py runserver 0.0.0.0:8000
+  volumes:
+    - .:/code
+  ports:
+   - 8000:8000
+  depends_on:
+   - db
+ db:
+  image: example.dockeregistry.com:5000/postgres:13
+  volumes:
+    - postgres_data:/var/lib/postgresql/data/
+  environment:
+    - "POSTGRES_HOST_AUTH_METHOD=trust"
+    - "HOST=slave.com"
+    - "PORT=5432"
+volumes:
+  postgres_data:

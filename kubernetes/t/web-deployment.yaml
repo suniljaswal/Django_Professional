@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web
+  name: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: web
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: web
+    spec:
+      containers:
+        - args:
+            - python
+            - /code/manage.py
+            - runserver
+            - 0.0.0.0:8000
+          image: example.dockeregistry.com:5000/django2:2
+          name: web
+          ports:
+            - containerPort: 8000
+          resources: {}
+          volumeMounts:
+            - mountPath: /code
+              name: web-nfs
+      restartPolicy: Always
+      volumes:
+        - name: web-nfs
+          nfs:
+           server: 192.168.122.50
+           path: /u01/oracle/Django1/code
