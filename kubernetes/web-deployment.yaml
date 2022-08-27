@@ -28,7 +28,7 @@ spec:
             - manage.py
             - runserver
             - 0.0.0.0:8000
-          image: example.dockeregistry.com:5000/django:1
+          image: example.dockeregistry.com:5000/django2:2
           name: web
           ports:
             - containerPort: 8000
